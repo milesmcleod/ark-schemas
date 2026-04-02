@@ -1,0 +1,36 @@
+name: adr
+directory: adr
+prefix: ADR
+fields:
+  - name: id
+    type: string
+    required: true
+    derived: true
+    pattern: "^ADR-\\d{3,}$"
+  - name: title
+    type: string
+    required: true
+  - name: status
+    type: enum
+    required: true
+    values: [proposed, accepted, deprecated, superseded]
+    default: proposed
+  - name: date
+    type: date
+    required: true
+  - name: supersedes
+    type: string
+  - name: tags
+    type: list
+  - name: created
+    type: date
+    derived: true
+  - name: updated
+    type: date
+    derived: true
+template: |
+  ## Context
+
+  ## Decision
+
+  ## Consequences

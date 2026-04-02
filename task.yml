@@ -1,0 +1,7 @@
+name: task
+extends: base-task
+fields:
+  - name: type
+    type: enum
+    required: true
+    values: [feature, bug, chore, research]
