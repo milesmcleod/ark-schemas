@@ -1,0 +1,48 @@
+# ADR-shaped knowledge memory: why something was decided, so later agents do not re-litigate it.
+# Written on gate resolution and for contested calls. Superseded, never deleted.
+name: decision
+directory: decisions
+prefix: D
+fields:
+  - name: id
+    type: string
+    required: true
+    derived: true
+    pattern: "^D-\\d{3,}$"
+  - name: title
+    type: string
+    required: true
+  - name: status
+    type: enum
+    required: true
+    values: [proposed, accepted, superseded]
+    default: accepted
+  # Project or `global` for cross-project decisions.
+  - name: project
+    type: string
+    required: true
+  # D-xxx this supersedes, if any.
+  - name: supersedes
+    type: string
+    pattern: "^D-\\d{3,}$"
+  # Ticket, task, or increment that prompted it.
+  - name: prompted_by
+    type: list
+  - name: tags
+    type: list
+  - name: created
+    type: date
+    derived: true
+  - name: updated
+    type: date
+    derived: true
+archive:
+  field: status
+  value: superseded
+  directory: decisions/superseded
+template: |
+  ## Context
+
+  ## Decision
+
+  ## Consequences

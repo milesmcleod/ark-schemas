@@ -1,0 +1,64 @@
+# A sequenced slice of a build: what used to be called increment, band, or milestone.
+# An increment closes when its tasks are done and any gate on it is resolved.
+name: increment
+directory: increments
+prefix: I
+fields:
+  - name: id
+    type: string
+    required: true
+    derived: true
+    pattern: "^I-\\d{3,}$"
+  - name: title
+    type: string
+    required: true
+  - name: status
+    type: enum
+    required: true
+    values: [planned, active, done, cancelled]
+    default: planned
+  - name: priority
+    type: integer
+    required: true
+    unique: true
+  - name: project
+    type: string
+    required: true
+  # One sentence: what is true when this increment is done.
+  - name: goal
+    type: string
+    required: true
+  # Gate that closes the increment (e.g. device: an on-phone road test). `none` if tests suffice.
+  - name: gate
+    type: enum
+    required: true
+    values: [none, human, device, design, external]
+    default: none
+  - name: depends_on
+    type: list
+  - name: tags
+    type: list
+  - name: created
+    type: date
+    derived: true
+  - name: updated
+    type: date
+    derived: true
+graph:
+  depends_on: depends_on
+  gate:
+    field: gate
+    open: none
+  ready_statuses: [planned]
+archive:
+  field: status
+  value: done
+  directory: increments/done
+template: |
+  ## Scope
+
+  ## Exit criteria
+
+  - [ ]
+
+  ## Road test notes

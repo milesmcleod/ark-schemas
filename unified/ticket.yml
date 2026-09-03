@@ -1,0 +1,55 @@
+# Knowledge node for a tracker ticket (Jira at work). Created as a side effect of first touch.
+# The Jira key is the lookup key; the ark id exists so edges and hooks work like any artifact.
+name: ticket
+directory: tickets
+prefix: K
+fields:
+  - name: id
+    type: string
+    required: true
+    derived: true
+    pattern: "^K-\\d{3,}$"
+  - name: title
+    type: string
+    required: true
+  - name: jira
+    type: string
+    required: true
+    pattern: "^[A-Z]+-\\d+$"
+  - name: status
+    type: enum
+    required: true
+    values: [open, in_progress, review, done, dropped]
+    default: open
+  - name: repo
+    type: string
+  - name: branch
+    type: string
+  # Parent epic's ticket node (K-xxx), when known. Backfilled when discovered.
+  - name: epic
+    type: string
+    pattern: "^K-\\d{3,}$"
+  # PR references as owner/repo#number.
+  - name: prs
+    type: list
+  # Decision and fact nodes surfaced while working this ticket.
+  - name: learned
+    type: list
+  - name: tags
+    type: list
+  - name: created
+    type: date
+    derived: true
+  - name: updated
+    type: date
+    derived: true
+archive:
+  field: status
+  value: done
+  directory: tickets/done
+template: |
+  ## What this is
+
+  ## Decisions and deviations
+
+  ## Orchestration

@@ -21,6 +21,23 @@ Then run `ark registry-pull` to fetch the latest version.
 | `spec.yml` | Gherkin-style feature specifications |
 | `adr.yml` | Architectural Decision Records |
 | `base-task.yml` | Base task schema for inheritance |
+| `unified/task.yml` | Task for a single per-machine store: `project`, `kind`, `increment`, `gate`, `depends_on`, with a `graph:` block for `ark ready` and `ark gates` |
+| `unified/increment.yml` | A sequenced slice of a build (the one word for increment, band, milestone), with its own closing gate |
+| `unified/ticket.yml` | Knowledge node for a tracker ticket (Jira key as the lookup key); created on first touch |
+| `unified/decision.yml` | ADR-shaped decision record, superseded never deleted |
+| `unified/fact.yml` | One-paragraph durable fact; `push: true` facts are injected by `ark prime` |
+
+## The unified set
+
+`unified/` is the schema set for running one ark store per machine (`ARK_ROOT`) across many projects. Every artifact carries a `project` field; increments replace per-project notions of bands and milestones; `gate` and `depends_on` drive `ark ready`, and `ark gates` answers "what is waiting on me". Requires ark 0.7.0 or newer for the `graph:` block. Pull all five:
+
+```yaml
+# .ark/schemas/task.yml
+name: task
+registry: https://raw.githubusercontent.com/milesmcleod/ark-schemas/main/unified/task.yml
+```
+
+ADRs stay in the product repos; they document the code, not the store.
 
 ## Extending
 

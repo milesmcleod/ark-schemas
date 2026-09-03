@@ -1,0 +1,82 @@
+# Unified task schema: one store per machine, many projects.
+# Pulled into a store with `ark registry-pull`; override enums locally if needed.
+name: task
+directory: tasks
+prefix: T
+fields:
+  - name: id
+    type: string
+    required: true
+    derived: true
+    pattern: "^T-\\d{3,}$"
+  - name: title
+    type: string
+    required: true
+  - name: status
+    type: enum
+    required: true
+    # cancelled: the work will not be done because what it was for no longer exists.
+    # blocked: waiting on something nameable (a depends_on target or a gate).
+    values: [backlog, active, blocked, done, cancelled]
+    default: backlog
+  - name: priority
+    type: integer
+    required: true
+    unique: true
+  # Which product or repo this belongs to. A free string on purpose: the set of projects
+  # is a growing collection, not a fixed vocabulary. Use the repo name.
+  - name: project
+    type: string
+    required: true
+  - name: kind
+    type: enum
+    required: true
+    values: [feature, bug, chore, research, bench, design, spike]
+    default: feature
+  # Increment this task belongs to (an increment artifact ID, e.g. I-012). Optional: tooling,
+  # rules, and defects in shipped work often belong to no increment.
+  - name: increment
+    type: string
+    pattern: "^I-\\d{3,}$"
+  # What has to happen before an agent can pick this up. `none` means claimable now.
+  # human: a decision only Miles can make. device: needs a physical phone, board, or bench.
+  # design: waits on the design track. external: waits on something outside the repo.
+  - name: gate
+    type: enum
+    required: true
+    values: [none, human, device, design, external]
+    default: none
+  # Artifact IDs that must reach `done` before this is ready. Computed by `ark ready`.
+  - name: depends_on
+    type: list
+  - name: worktree
+    type: string
+  - name: spec
+    type: string
+  - name: tags
+    type: list
+  - name: created
+    type: date
+    derived: true
+  - name: updated
+    type: date
+    derived: true
+graph:
+  depends_on: depends_on
+  gate:
+    field: gate
+    open: none
+  increment: increment
+  ready_statuses: [backlog]
+archive:
+  field: status
+  value: done
+  directory: tasks/done
+template: |
+  ## Context
+
+  ## Acceptance criteria
+
+  - [ ]
+
+  ## Notes

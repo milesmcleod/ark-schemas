@@ -1,0 +1,45 @@
+# Durable technical fact discovered while working: IDs, limits, gotchas, field mappings.
+# One paragraph. `push: true` facts are injected into every session by `ark prime`.
+name: fact
+directory: facts
+prefix: F
+fields:
+  - name: id
+    type: string
+    required: true
+    derived: true
+    pattern: "^F-\\d{3,}$"
+  - name: title
+    type: string
+    required: true
+  - name: status
+    type: enum
+    required: true
+    values: [current, stale, retired]
+    default: current
+  # Project, repo, or `global`.
+  - name: project
+    type: string
+    required: true
+  - name: push
+    type: boolean
+    default: false
+  # Where it came from: ticket, task, PR, URL.
+  - name: source
+    type: list
+  - name: tags
+    type: list
+  - name: created
+    type: date
+    derived: true
+  - name: updated
+    type: date
+    derived: true
+graph:
+  push: push
+archive:
+  field: status
+  value: retired
+  directory: facts/retired
+template: |
+  One paragraph. State the fact, the scope it holds in, and how it was verified.
