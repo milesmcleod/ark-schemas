@@ -27,7 +27,6 @@ fields:
   # One sentence: what is true when this increment is done.
   - name: goal
     type: string
-    required: true
   # Gate that closes the increment (e.g. device: an on-phone road test). `none` if tests suffice.
   - name: gate
     type: enum
@@ -35,6 +34,9 @@ fields:
     values: [none, human, device, design, external]
     default: none
   - name: depends_on
+    type: list
+  # Soft cross-references to other artifact IDs; edges in the index, no effect on readiness.
+  - name: related
     type: list
   - name: tags
     type: list

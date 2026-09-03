@@ -53,6 +53,9 @@ fields:
     type: string
   - name: spec
     type: string
+  # Soft cross-references to other artifact IDs; edges in the index, no effect on readiness.
+  - name: related
+    type: list
   - name: tags
     type: list
   # Where this came from when consolidated from another store, e.g. cairn:TSK-042.
