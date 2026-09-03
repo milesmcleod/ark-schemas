@@ -29,6 +29,9 @@ fields:
     type: list
   - name: tags
     type: list
+  # Where this came from when consolidated from another store, e.g. cairn:TSK-042.
+  - name: origin
+    type: string
   - name: created
     type: date
     derived: true
