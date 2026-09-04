@@ -79,10 +79,10 @@ archive:
   value: done
   directory: tasks/done
 template: |
-  ## Context
+  ## Summary
 
   ## Acceptance criteria
 
   - [ ]
 
-  ## Notes
+  ## Log

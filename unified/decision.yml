@@ -28,6 +28,13 @@ fields:
   # Ticket, task, or increment that prompted it.
   - name: prompted_by
     type: list
+  # Repos or projects this guidance applies to when coding and reviewing; `global` for all.
+  - name: applies_to
+    type: list
+  # Inject into every session of the projects in applies_to (via `ark prime --project`).
+  - name: push
+    type: boolean
+    default: false
   # Soft cross-references to other artifact IDs; edges in the index, no effect on readiness.
   - name: related
     type: list
@@ -42,6 +49,8 @@ fields:
   - name: updated
     type: date
     derived: true
+graph:
+  push: push
 archive:
   field: status
   value: superseded

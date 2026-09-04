@@ -1,0 +1,69 @@
+# An observed production signal (a log pattern, an alert, an error class) and what we decided about it.
+# Written and updated by the on-call sweep; humans only change `disposition` and `ref`.
+# Answers "is this novel or already known" with `ark search <fingerprint>`.
+name: signal
+directory: signals
+prefix: S
+fields:
+  - name: id
+    type: string
+    required: true
+    derived: true
+    pattern: "^S-\\d{3,}$"
+  - name: title
+    type: string
+    required: true
+  # Service or subsystem the signal belongs to (Coralogix subsystem name where possible).
+  - name: service
+    type: string
+    required: true
+  # The stable part of the log line, alert name, or error class. Exact enough to search, short enough to read.
+  - name: fingerprint
+    type: string
+    required: true
+  - name: status
+    type: enum
+    required: true
+    values: [open, closed]
+    default: open
+  # novel: seen, not yet decided. ticketed: a Jira issue exists (ref). raised-to-se: a Zendesk ticket exists (ref).
+  # accepted-noise: known, harmless, not worth a ticket; revisit when stale. fixed: gone; close the signal.
+  - name: disposition
+    type: enum
+    required: true
+    values: [novel, ticketed, raised-to-se, accepted-noise, fixed]
+    default: novel
+  # Jira key, Zendesk id, or PR reference backing the disposition.
+  - name: ref
+    type: string
+  - name: first_seen
+    type: date
+  # Bumped by every sweep that observes the fingerprint again.
+  - name: last_seen
+    type: date
+  # Approximate count in the last sweep window, for trend.
+  - name: last_count
+    type: integer
+  - name: project
+    type: string
+    required: true
+  - name: related
+    type: list
+  - name: tags
+    type: list
+  - name: origin
+    type: string
+  - name: created
+    type: date
+    derived: true
+  - name: updated
+    type: date
+    derived: true
+archive:
+  field: status
+  value: closed
+  directory: signals/closed
+template: |
+  ## Summary
+
+  ## Log

@@ -54,8 +54,6 @@ archive:
   value: done
   directory: tickets/done
 template: |
-  ## What this is
+  ## Summary
 
-  ## Decisions and deviations
-
-  ## Orchestration
+  ## Log

@@ -60,10 +60,10 @@ archive:
   value: done
   directory: increments/done
 template: |
-  ## Scope
+  ## Summary
 
   ## Exit criteria
 
   - [ ]
 
-  ## Road test notes
+  ## Log
