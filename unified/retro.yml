@@ -1,6 +1,6 @@
 # Retrospective on a piece of work (a ticket, an increment, or a session set): what went well,
 # what hurt, and the actions that change the harness, the store, or the tracker. Written by the
-# orchestrator at the end of a run; a person reads it before any action lands. Closed, never deleted.
+# orchestrator at the end of a run and acted on from there. Closed, never deleted.
 name: retro
 directory: retros
 prefix: R
@@ -13,13 +13,12 @@ fields:
   - name: title
     type: string
     required: true
-  # draft: written by an agent, unread. reviewed: a person read it and settled the actions.
-  # closed: every action executed, retired, or filed elsewhere.
+  # open: at least one action is pending or deferred. closed: every action executed, retired, or filed elsewhere.
   - name: status
     type: enum
     required: true
-    values: [draft, reviewed, closed]
-    default: draft
+    values: [open, closed]
+    default: open
   - name: project
     type: string
     required: true
@@ -47,9 +46,6 @@ fields:
   - name: updated
     type: date
     derived: true
-audit:
-  status_age:
-    draft: 7
 archive:
   field: status
   value: closed

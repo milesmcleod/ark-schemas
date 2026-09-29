@@ -26,7 +26,7 @@ Then run `ark registry-pull` to fetch the latest version.
 | `unified/ticket.yml` | Knowledge node for a tracker ticket (Jira key as the lookup key); created on first touch |
 | `unified/decision.yml` | ADR-shaped decision record, superseded never deleted |
 | `unified/fact.yml` | One-paragraph durable fact; `push: true` facts are injected by `ark prime` |
-| `unified/retro.yml` | Retrospective on a ticket, increment, or session set: went well, hurt, actions with owner and destination; a person reads it before actions land |
+| `unified/retro.yml` | Retrospective on a ticket, increment, or session set: went well, hurt, actions with owner and destination, open until every action lands |
 
 ## The unified set
 
