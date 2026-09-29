@@ -1,0 +1,67 @@
+# Retrospective on a piece of work (a ticket, an increment, or a session set): what went well,
+# what hurt, and the actions that change the harness, the store, or the tracker. Written by the
+# orchestrator at the end of a run; a person reads it before any action lands. Closed, never deleted.
+name: retro
+directory: retros
+prefix: R
+fields:
+  - name: id
+    type: string
+    required: true
+    derived: true
+    pattern: "^R-\\d{3,}$"
+  - name: title
+    type: string
+    required: true
+  # draft: written by an agent, unread. reviewed: a person read it and settled the actions.
+  # closed: every action executed, retired, or filed elsewhere.
+  - name: status
+    type: enum
+    required: true
+    values: [draft, reviewed, closed]
+    default: draft
+  - name: project
+    type: string
+    required: true
+  # The work this retro covers: ticket (K-), increment (I-), or task IDs.
+  - name: about
+    type: list
+    required: true
+  # Session id prefixes the retro drew on, so a later reader can find the transcripts.
+  - name: sessions
+    type: list
+  # Facts or decisions written because of this retro.
+  - name: produced
+    type: list
+  # Soft cross-references to other artifact IDs; edges in the index, no effect on readiness.
+  - name: related
+    type: list
+  - name: tags
+    type: list
+  # Where this came from when consolidated from another store, e.g. cairn:TSK-042.
+  - name: origin
+    type: string
+  - name: created
+    type: date
+    derived: true
+  - name: updated
+    type: date
+    derived: true
+audit:
+  status_age:
+    draft: 7
+archive:
+  field: status
+  value: closed
+  directory: retros/closed
+template: |
+  ## Went well
+
+  ## Hurt
+
+  ## Actions
+
+  | action | owner | destination | status |
+  |---|---|---|---|
+
+  ## Log
